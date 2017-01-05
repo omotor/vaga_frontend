@@ -19,8 +19,9 @@ Por favor não envie o exercício utilizando typescript. O que deve ser avaliado
 ## Exercício
 
 
-* Acesse a URL https://query.yahooapis.com/v1/public/yql?q=select%20item.condition%20from%20weather.forecast%20where%20woeid%20%3D%20455827&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
-* Nesta URL esta o retorno da api do yahoo weather com o woeid de São Paulo.
+* Acesse a URL https://developer.yahoo.com/weather/
+* O objetivo é retornar a previsão do tempo para São Paulo (woeid=455827)
+* Utilize JSON como formato de resposta
 * Crie uma página com uma tabela que mostre a condição do tempo (Estado, Data(Formato dd/mm/yyyy hh:mm:ss), Temperatura fahrenheit, Temperatura celsius, Previsão traduzida (Texto inglês para português))
 * Atualize a tabela adicionando uma nova previsão quando ocorrer mudanças
 * Deve ser incluída na página um **gráfico de linha (Line Chart)** mostrando a diferença entre as **5 maiores** temperaturas da tabela.
