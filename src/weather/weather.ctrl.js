@@ -1,7 +1,8 @@
 class WeatherCtrl {
   /*@ngInject*/
   constructor () {
-    console.log('WeatherCtrl');
+    const ctrl = this;
   }
 }
+
 export default WeatherCtrl;

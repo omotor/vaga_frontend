@@ -10,6 +10,8 @@ import translateCondition from './src/translateCondition';
 const app = new Koa();
 const router = new Router();
 
+const lastResponse = null;
+
 const getForecast = async (attempts = 0) => {
   const req = await request({
     url: 'https://query.yahooapis.com/v1/public/yql?q=select%20item%20from%20weather.forecast%20where%20woeid%20%3D%20455827&format=json'
@@ -18,7 +20,11 @@ const getForecast = async (attempts = 0) => {
   const results = JSON.parse(req).query.results
   if (!results) {
     if (attempts >= 1) {
-      throw new Error(`Couldn't reach Yahoo API (maximum attempts reached).`);
+      if (lastResponse) {
+        return lastResponse;
+      } else {
+        throw new Error(`Couldn't reach Yahoo API (maximum attempts reached).`);
+      }
     }
     return getForecast(attempts+1);
   }
