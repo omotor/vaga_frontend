@@ -1,0 +1,22 @@
+<table>
+  <thead>
+    <tr>
+      <th>Dia:</th>
+      <th>Máx. Fahrenheit:</th>
+      <th>Máx. Celsius:</th>
+      <th>Min. Fahrenheit:</th>
+      <th>Min. Celsius:</th>
+      <th>Previsão:</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="f in $ctrl.forecast">
+      <td>{{f.date}}</td>
+      <td>{{f.high}}</td>
+      <td>{{f.low}}</td>
+      <td>{{$ctrl.f2c(f.high)}}</td>
+      <td>{{$ctrl.f2c(f.low)}}</td>
+      <td>{{f.text}}</td>
+    </tr>
+  </tbody>
+</table>

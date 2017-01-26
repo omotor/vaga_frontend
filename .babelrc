@@ -1,0 +1,10 @@
+{
+  "plugins": [
+    "add-module-exports",
+    "transform-async-functions"
+  ],
+  "presets": [
+    "es2015-node",
+    "stage-0"
+  ]
+}
