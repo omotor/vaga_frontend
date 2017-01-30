@@ -1,10 +1,8 @@
 (function() {
     'use strict';
-
     angular
         .module('test')
         .directive('switchTemperature', function() {
-
             return {
                 restrict: "EA",
                 scope: false,
@@ -32,18 +30,5 @@
                     }
                 }
             }
-
         });
-
 })();
-                // return {
-                //     restrict: 'E',
-                //     transclude: false,
-                //     replace: true,
-                //     scope: {
-                //         // onPost: "&"
-                //     },
-                //     templateUrl: "/temperature-switch/temperature-switch.html",
-                //     controller: function($scope) {
-                //     }
-                // };
