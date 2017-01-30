@@ -1,0 +1,35 @@
+
+<div id="weather" class="container" day-time>
+	<div class="weather-box">
+		<header>
+			<div class="row">
+				<div class="col-md-3 text-center">
+					<img class="pull-left" ng-src="app/img/{{weather.results.channel.item.condition.code}}.png" alt="">
+				</div>
+				<div class="col-md-6 text-center">
+					<h1 class="m-0">{{weather.results.channel.location.city}}</h1>
+					<small>{{weather.created | date: 'dd/MM/yyyy hh:mm:ss'}}</small>
+				</div>
+				<div class="col-md-3 text-center">
+					<h2 class="m-0">
+						<img src="app/img/temp.png" class="temp-icon">
+						{{weather.results.channel.item.condition.temp}}
+						<img ng-src="app/img/{{weather.results.channel.units.temperature}}.png" class="temp-type">
+					</h2>
+					<switch-temperature></switch-temperature>
+				</div>
+			</div>
+		</header>
+		<hr>
+		<div class="row forecast">
+			<div class="col-md-2" ng-repeat="item in weather.results.channel.item.forecast | limitTo: 7" ng-if="$index > 0">
+				<h3>{{item.day | translate}}</h3>
+				<img class="img-responsive" ng-src="app/img/{{item.code}}.png" alt="">
+				<br>
+				<small>{{item.high}}º ~ {{item.low}}º</small>
+			</div>
+		</div>
+		<hr>
+		<canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-hover="false" chart-options="options" chart-dataset-override="datasetOverride"></canvas>
+	</div>
+</div>
