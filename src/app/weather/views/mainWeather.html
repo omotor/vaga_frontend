@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="pege-header"><h1>Weather Forecast</h1></div>
+  <hr>
+  <div class="loading" ng-if="!weather.condition">
+    <h2>Loading...</h2>
+  </div>
+  <div class="table-responsive" ng-if="weather.condition">
+    <table class="table table-stripped">
+      <thead>
+        <tr>
+          <th>Estado</th>
+          <th>Data</th>
+          <th>Fahrenheit</th>
+          <th>Celsius</th>
+          <th>Previsão</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="forecast in weather.forecast">
+          <th ng-bind="weather.locale.city"></th>
+          <th ng-bind="forecast.date | date: 'dd/MM/yyyy hh:mm:ss' "></th>
+          <th ng-bind="forecast.high"></th>
+          <th ng-bind="forecast.celsius"></th>
+          <th ng-bind="forecast.text"></th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <canvas class="chart chart-line" chart-data="weather.data" chart-labels="weather.labels"></canvas> 
+</div>
