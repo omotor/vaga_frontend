@@ -1,5 +1,7 @@
-app.controller('PrevisaoTempoCtrl', ['$scope', 'PrevisaoTempoService', '$filter', '$interval', function($scope, PrevisaoTempoService, $filter, $interval){
+app.controller('PrevisaoTempoCtrl', ['$scope', 'PrevisaoTempoService', '$filter', '$interval', '$routeParams', 
+function($scope, PrevisaoTempoService, $filter, $interval, $routeParams){
 
+    $scope.woeid = $routeParams.woeid || 455827; //Valor padrão São Paulo mas pode ser qualquer woeid
     $scope.orderBy = 'date';
     $scope.ordenacaoDesc = false;
     $scope.escalaGrafico = 'celcius';
@@ -34,8 +36,10 @@ app.controller('PrevisaoTempoCtrl', ['$scope', 'PrevisaoTempoService', '$filter'
     };
 
     $scope.load = function(){
-        PrevisaoTempoService.getPrevisaoTempoSaoPaulo()
+        PrevisaoTempoService.getPrevisaoTempo($scope.woeid)
             .then(function(response){
+                response.data.woeid = $scope.woeid;
+                console.log(response.data);
                 $scope.previsaoTempo = PrevisaoTempoService.formatarRetorno(response.data); 
                 $scope.carregarGrafico();
             })
@@ -74,5 +78,5 @@ app.controller('PrevisaoTempoCtrl', ['$scope', 'PrevisaoTempoService', '$filter'
 
     $scope.load();
 
-    $interval($scope.load, 5000);
+    // $interval($scope.load, 5000);
 }]);

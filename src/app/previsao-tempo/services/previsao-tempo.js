@@ -1,10 +1,17 @@
 app.service('PrevisaoTempoService', ['$http', '$filter',  function($http, $filter){
     var self = this;
 
-    self.getPrevisaoTempoSaoPaulo = function(){
+    self.locais = {
+        '455827': 'São Paulo, SP, Brasil'
+    }
+
+    self.getPrevisaoTempo = function(woeid){
+        if(!woeid)
+            woeid = 455827;
+
         var config = {
             params : {
-                q: "select * from weather.forecast where woeid = 455827",
+                q: "select * from weather.forecast where woeid = " + woeid,
                 format: "json"
             }
         }
@@ -72,6 +79,7 @@ app.service('PrevisaoTempoService', ['$http', '$filter',  function($http, $filte
             retornoFormatado.channel = formatarChannel(retornoFormatado.channel);
         }
 
+        retornoFormatado.title = self.locais[data.woeid] || retornoFormatado.channel.title.replace('Yahoo! Weather - ', '');
         return retornoFormatado;
     }
 

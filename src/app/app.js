@@ -3,7 +3,7 @@ var app = angular.module('myApp', ['ngRoute', 'chart.js', 'templates']);
 app.config(['$routeProvider', 'ChartJsProvider', function($routeProvider, ChartJsProvider){
 
     $routeProvider  
-        .when('/previsao-tempo', {
+        .when('/previsao-tempo/:woeid?', {
             templateUrl: 'app/previsao-tempo/views/previsao-tempo.html',
             controller: 'PrevisaoTempoCtrl'
         })
