@@ -16,8 +16,21 @@
                     </select>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <strong>Considerar temperatura: </strong>
+                </div> 
+                <div class="col-md-8">
+                    <select class="form-control" ng-model="criterioGrafico" ng-change="carregarGrafico()">
+                        <option value="maxima">Máxima</option>    
+                        <option value="minima">Mínima</option>    
+                        <option value="media">Média</option>    
+                    </select>
+                </div>
+            </div>
             <div class="small-space"></div>
-            <canvas id="line" class="chart chart-line" chart-data="data"
+            <canvas id="line" class="chart chart-line" 
+                    chart-data="data"
                     chart-labels="labels"
                     chart-series="series"
                     chart-options="chartOptions"
@@ -34,15 +47,15 @@
             <table class="table table-responsive" id="tabela-previsao-tempo" ng-if="!carregando">
                 <thead>
                     <th class="estado">Estado</th>
-                    <th class="data" ng-click="alterarOrdenacao(date)">Data</th>
-                    <th class="fahrenheit" ng-click="alterarOrdenacao(lowFahrenheit)">Temperatura Fahrenheit (Min)</th>
-                    <th class="fahrenheit" ng-click="alterarOrdenacao(highFahrenheit)">Temperatura Fahrenheit (Max)</th>
-                    <th class="celcius" ng-click="alterarOrdenacao(lowCelcius)">Temperatura Celcius (Min)</th>
-                    <th class="celcius" ng-click="alterarOrdenacao(highCelcius)">Temperatura Celcius (Max)</th>
-                    <th class="condicao" ng-click="alterarOrdenacao(textoTraduzido)">Condição</th>
+                    <th class="data" ng-click="alterarOrdenacao('date')">Data</th>
+                    <th class="fahrenheit" ng-click="alterarOrdenacao('lowFahrenheit')">Temperatura Mínima °F</th>
+                    <th class="fahrenheit" ng-click="alterarOrdenacao('highFahrenheit')">Temperatura Máxima °F</th>
+                    <th class="celcius" ng-click="alterarOrdenacao('lowCelcius')">Temperatura Mínima °C</th>
+                    <th class="celcius" ng-click="alterarOrdenacao('highCelcius')">Temperatura Máxima °C</th>
+                    <th class="condicao" ng-click="alterarOrdenacao('textoTraduzido')">Condição</th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="previsao in previsaoTempo.channel.item.forecast | orderBy : orderBy : ordenacaoDesc">
+                    <tr ng-repeat="previsao in previsaoTempo.channel.item.forecast">
                         <td>{{previsaoTempo.channel.location.region}}</td>
                         <td>{{previsao.date | date:'dd/MM/yyyy HH:mm:ss'}}</td>
                         <td>{{previsao.lowFahrenheit}} °F</td>

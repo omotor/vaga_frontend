@@ -38,6 +38,9 @@ app.service('PrevisaoTempoService', ['$http', '$filter',  function($http, $filte
             forecast.lowFahrenheit = parseFloat(forecast.low);
             forecast.low = undefined;
 
+            forecast.mediaFahrenheit = (forecast.highFahrenheit + forecast.lowFahrenheit) / 2;
+            forecast.mediaCelcius = (forecast.highCelcius + forecast.lowCelcius) / 2;
+
             forecast.date = new Date(forecast.date);
             forecast.textoTraduzido = getCondicaoTempo(forecast.code);
             

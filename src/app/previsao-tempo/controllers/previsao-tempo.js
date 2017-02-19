@@ -4,6 +4,7 @@ app.controller('PrevisaoTempoCtrl', ['$scope', 'PrevisaoTempoService', '$filter'
     $scope.ordenacaoDesc = false;
     $scope.escalaGrafico = 'celcius';
     $scope.carregando = true;
+    $scope.criterioGrafico = 'maxima';
 
     $scope.selecionarEscalaGrafico = function(escala){
         if($scope.escalaGrafico == escala)
@@ -13,14 +14,23 @@ app.controller('PrevisaoTempoCtrl', ['$scope', 'PrevisaoTempoService', '$filter'
         $scope.carregarGrafico();
     }
 
-    $scope.series = ['Máxima', 'Mínima'];
+    $scope.series = ['Máxima',  'Média', 'Mínima'];
 
     $scope.alterarOrdenacao = function(orderBy){
-        if($scope.orderBy === orderBy)
-            return $scope.ordenacaoDesc = !$scope.ordenacaoDesc; 
+        if($scope.orderBy == orderBy)
+        {
+            $scope.ordenacaoDesc = !$scope.ordenacaoDesc; 
+        }
+        else
+        {
+            $scope.orderBy = orderBy;
+            $scope.ordenacaoDesc = false;
+        }
+        $scope.aplicarOrdenacao();
+    };
 
-        $scope.orderBy = orderBy;
-        $scope.ordenacaoDesc = false;
+    $scope.aplicarOrdenacao = function(){
+        $scope.previsaoTempo.channel.item.forecast =  $filter('orderBy')($scope.previsaoTempo.channel.item.forecast, $scope.orderBy, $scope.ordenacaoDesc);
     };
 
     $scope.load = function(){
@@ -39,29 +49,30 @@ app.controller('PrevisaoTempoCtrl', ['$scope', 'PrevisaoTempoService', '$filter'
         var propriedadeEscala = {
             'celcius' : { 
                 maxima: 'highCelcius',
-                minima: 'lowCelcius'
+                minima: 'lowCelcius',
+                media: 'mediaCelcius'
             },
             'fahrenheit' : { 
                 maxima : 'highFahrenheit',
-                minima:  'lowFahrenheit' 
+                minima:  'lowFahrenheit',
+                media: 'mediaFahrenheit'
             }
         };
 
-
         var propriedade = propriedadeEscala[$scope.escalaGrafico];
+        var propriedadeOrdenacao = propriedade[$scope.criterioGrafico];
 
-        $scope.maioresTemps  = $filter('orderBy')($scope.previsaoTempo.channel.item.forecast, propriedade.maxima).slice(-5);
+        $scope.maioresTemps  = $filter('orderBy')($scope.previsaoTempo.channel.item.forecast, propriedadeOrdenacao).slice(-5);
         $scope.data = [ 
             $scope.maioresTemps.map(function(temp){ return temp[propriedade.maxima]; }),
-            $scope.maioresTemps.map(function(temp){ return  temp[propriedade.minima]; })
+            $scope.maioresTemps.map(function(temp){ return temp[propriedade.media]; }),
+            $scope.maioresTemps.map(function(temp){ return temp[propriedade.minima]; })
         ];
         $scope.labels = $scope.maioresTemps.map(function(temp){ return $filter('date')(temp.date, 'dd/MM/yyyy'); });
-        console.log($scope.data);
-
         $scope.carregando = false;
     };
 
     $scope.load();
 
-    $interval($scope.load, 5000);
+    // $interval($scope.load, 5000);
 }]);
