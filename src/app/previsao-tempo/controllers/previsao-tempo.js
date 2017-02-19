@@ -74,5 +74,5 @@ app.controller('PrevisaoTempoCtrl', ['$scope', 'PrevisaoTempoService', '$filter'
 
     $scope.load();
 
-    // $interval($scope.load, 5000);
+    $interval($scope.load, 5000);
 }]);

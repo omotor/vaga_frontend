@@ -1,44 +1,46 @@
 <div class="container" id="previsao-page">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Condição do tempo para São Paulo</h1>
-            <br>
-            <h2>5 Maiores temperaturas</h2>
-            <div class="small-space"></div>
-            <div class="row">
-                <div class="col-md-4">
-                    <strong>Escala de temperatura do gráfico: </strong>
-                </div> 
-                <div class="col-md-8">
-                    <select class="form-control" ng-model="escalaGrafico" ng-change="carregarGrafico()">
-                        <option value="celcius">Celcius</option>    
-                        <option value="fahrenheit">Fahrenheit</option>    
-                    </select>
-                </div>
+    <h1>Condição do tempo para São Paulo</h1>
+    <br>
+
+    <div class="well well-lg">
+        <!--<h2>5 Maiores temperaturas</h2>-->
+        <div class="small-space"></div>
+        <div class="row">
+            <div class="col-md-4">
+                <strong>Escala de temperatura do gráfico: </strong>
+            </div> 
+            <div class="col-md-8">
+                <select class="form-control" ng-model="escalaGrafico" ng-change="carregarGrafico()">
+                    <option value="celcius">Celcius</option>    
+                    <option value="fahrenheit">Fahrenheit</option>    
+                </select>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <strong>Considerar temperatura: </strong>
-                </div> 
-                <div class="col-md-8">
-                    <select class="form-control" ng-model="criterioGrafico" ng-change="carregarGrafico()">
-                        <option value="maxima">Máxima</option>    
-                        <option value="minima">Mínima</option>    
-                        <option value="media">Média</option>    
-                    </select>
-                </div>
-            </div>
-            <div class="small-space"></div>
-            <canvas id="line" class="chart chart-line" 
-                    chart-data="data"
-                    chart-labels="labels"
-                    chart-series="series"
-                    chart-options="chartOptions"
-                    chart-dataset-override="datasetOverride">
-            </canvas>
         </div>
+        <div class="row">
+            <div class="col-md-4">
+                <strong>Considerar maior temperatura: </strong>
+            </div> 
+            <div class="col-md-8">
+                <select class="form-control" ng-model="criterioGrafico" ng-change="carregarGrafico()">
+                    <option value="maxima">Máxima</option>    
+                    <option value="minima">Mínima</option>    
+                    <option value="media">Média</option>    
+                </select>
+            </div>
+        </div>
+        <div class="small-space"></div>
+        <canvas id="line" class="chart chart-line" 
+                chart-data="data"
+                chart-labels="labels"
+                chart-series="series"
+                chart-options="chartOptions"
+                chart-dataset-override="datasetOverride">
+        </canvas>
     </div>
     <br>
+            
+
+    
 
     
     <div class="row">
