@@ -31,11 +31,11 @@ app.service('PrevisaoTempoService', ['$http', '$filter',  function($http, $filte
 
         var formatarForecast = function(forecast){
             forecast.highCelcius = converterFahrenheitsCelcius(forecast.high);
-            forecast.highFahrenheit = forecast.high;
+            forecast.highFahrenheit = parseFloat(forecast.high);
             forecast.high = undefined;
          
             forecast.lowCelcius = converterFahrenheitsCelcius(forecast.low);
-            forecast.lowFahrenheit = forecast.low;
+            forecast.lowFahrenheit = parseFloat(forecast.low);
             forecast.low = undefined;
 
             forecast.date = new Date(forecast.date);

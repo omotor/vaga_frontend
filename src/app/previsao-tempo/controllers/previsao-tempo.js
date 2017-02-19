@@ -3,6 +3,7 @@ app.controller('PrevisaoTempoCtrl', ['$scope', 'PrevisaoTempoService', '$filter'
     $scope.orderBy = 'date';
     $scope.ordenacaoDesc = false;
     $scope.escalaGrafico = 'celcius';
+    $scope.carregando = true;
 
     $scope.selecionarEscalaGrafico = function(escala){
         if($scope.escalaGrafico == escala)
@@ -12,7 +13,7 @@ app.controller('PrevisaoTempoCtrl', ['$scope', 'PrevisaoTempoService', '$filter'
         $scope.carregarGrafico();
     }
 
-    $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
+    $scope.series = ['Máxima', 'Mínima'];
 
     $scope.alterarOrdenacao = function(orderBy){
         if($scope.orderBy === orderBy)
@@ -36,14 +37,28 @@ app.controller('PrevisaoTempoCtrl', ['$scope', 'PrevisaoTempoService', '$filter'
 
     $scope.carregarGrafico = function(){
         var propriedadeEscala = {
-            'celcius'  :   'highCelcius',
-            'fahrenheit' : 'highFahrenheit'
+            'celcius' : { 
+                maxima: 'highCelcius',
+                minima: 'lowCelcius'
+            },
+            'fahrenheit' : { 
+                maxima : 'highFahrenheit',
+                minima:  'lowFahrenheit' 
+            }
         };
+
+
         var propriedade = propriedadeEscala[$scope.escalaGrafico];
 
-        $scope.maioresTemps  = $filter('orderBy')($scope.previsaoTempo.channel.item.forecast, propriedade).slice(0, 5);
-        $scope.data = $scope.maioresTemps.map(function(temp){ return temp[propriedade]; });
+        $scope.maioresTemps  = $filter('orderBy')($scope.previsaoTempo.channel.item.forecast, propriedade.maxima).slice(-5);
+        $scope.data = [ 
+            $scope.maioresTemps.map(function(temp){ return temp[propriedade.maxima]; }),
+            $scope.maioresTemps.map(function(temp){ return  temp[propriedade.minima]; })
+        ];
         $scope.labels = $scope.maioresTemps.map(function(temp){ return $filter('date')(temp.date, 'dd/MM/yyyy'); });
+        console.log($scope.data);
+
+        $scope.carregando = false;
     };
 
     $scope.load();

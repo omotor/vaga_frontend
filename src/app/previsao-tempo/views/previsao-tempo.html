@@ -3,6 +3,8 @@
         <div class="col-md-12">
             <h1>Condição do tempo para São Paulo</h1>
             <br>
+            <h2>5 Maiores temperaturas</h2>
+            <div class="small-space"></div>
             <div class="row">
                 <div class="col-md-4">
                     <strong>Escala de temperatura do gráfico: </strong>
@@ -28,7 +30,8 @@
     
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-responsive" id="tabela-previsao-tempo">
+            <h1 ng-if="carregando"><i class="fa fa-spinner"></i>Carregando</h1>
+            <table class="table table-responsive" id="tabela-previsao-tempo" ng-if="!carregando">
                 <thead>
                     <th class="estado">Estado</th>
                     <th class="data" ng-click="alterarOrdenacao(date)">Data</th>
