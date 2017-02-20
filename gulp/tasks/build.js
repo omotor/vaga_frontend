@@ -1,6 +1,8 @@
 const gulp = require('gulp');
 const runSequence = require('run-sequence');
 
+gulp.task('default', ['build']);
+
 gulp.task('build', () => {
     return runSequence('clean', 
                         'clonarprojeto',
