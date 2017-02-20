@@ -7,6 +7,7 @@ function($scope, PrevisaoTempoService, $filter, $interval, $routeParams){
     $scope.escalaGrafico = 'celcius';
     $scope.carregando = true;
     $scope.criterioGrafico = 'maxima';
+    $scope.errorMsg = undefined;
 
     $scope.selecionarEscalaGrafico = function(escala){
         if($scope.escalaGrafico == escala)
@@ -38,13 +39,21 @@ function($scope, PrevisaoTempoService, $filter, $interval, $routeParams){
     $scope.load = function(){
         PrevisaoTempoService.getPrevisaoTempo($scope.woeid)
             .then(function(response){
-                response.data.woeid = $scope.woeid;
                 console.log(response.data);
+                if(!response.data 
+                    || !response.data.query
+                    || !response.data.query.results
+                    || !response.data.query.results.channel
+                    || !response.data.query.results.channel.item)
+                    return $scope.errorMsg = "Código inválido";
+
+                response.data.woeid = $scope.woeid;
+                
                 $scope.previsaoTempo = PrevisaoTempoService.formatarRetorno(response.data); 
                 $scope.carregarGrafico();
             })
             .catch(function(err){
-                throw err;
+                $scope.errorMsg = JSON.stringify(err.data, null, 2);
             });
     }
 
@@ -78,5 +87,5 @@ function($scope, PrevisaoTempoService, $filter, $interval, $routeParams){
 
     $scope.load();
 
-    // $interval($scope.load, 5000);
+    $interval($scope.load, 5000);
 }]);

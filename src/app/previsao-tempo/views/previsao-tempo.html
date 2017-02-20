@@ -1,66 +1,75 @@
 <div class="container" id="previsao-page">
-    <h1>Condição do tempo para {{previsaoTempo.title}}</h1>
-    <br>
-    <h1 ng-if="carregando"><i class="fa fa-spinner"></i>Carregando</h1>
-    <div class="well well-lg" id="well-grafico">
-        <h2 class="titulo-grafico"><i class="fa fa-thermometer-empty"></i> Maiores temperaturas</h2>
+    <h1 ng-if="carregando && !errorMsg"><i class="fa fa-spinner fa-spin"></i> Carregando</h1>
+    <div ng-if="errorMsg" class="well-error">
+        Erro ao obter dados: 
         <div class="small-space"></div>
-        <div class="row">
-            <div class="col-md-8">
-                <canvas id="line" class="chart chart-line" 
-                        chart-data="data"
-                        chart-labels="labels"
-                        chart-series="series"
-                        chart-options="chartOptions"
-                        chart-dataset-override="datasetOverride">
-                </canvas>
-            </div>
-
-            <div class="col-md-4">
-                <div class="row">
-                    <strong>Escala de temperatura do gráfico: </strong>
-                    <select class="form-control" ng-model="escalaGrafico" ng-change="carregarGrafico()">
-                        <option value="celcius">Celcius</option>    
-                        <option value="fahrenheit">Fahrenheit</option>    
-                    </select>
+        <pre>{{errorMsg}}</pre>
+    </div>
+    
+    <div ng-hide="carregando">
+        <h1>Condição do tempo para {{previsaoTempo.title}}</h1>
+        <br>
+        
+        <div class="well well-lg" id="well-grafico">
+            <h2 class="titulo-grafico"><i class="fa fa-thermometer-empty"></i> Maiores temperaturas</h2>
+            <div class="small-space"></div>
+            <div class="row">
+                <div class="col-md-8">
+                    <canvas id="line" class="chart chart-line" 
+                            chart-data="data"
+                            chart-labels="labels"
+                            chart-series="series"
+                            chart-options="chartOptions"
+                            chart-dataset-override="datasetOverride">
+                    </canvas>
                 </div>
-                <div class="row">
-                    <strong>Considerar maior temperatura: </strong>
-                    <select class="form-control" ng-model="criterioGrafico" ng-change="carregarGrafico()">
-                        <option value="maxima">Máxima</option>    
-                        <option value="minima">Mínima</option>    
-                        <option value="media">Média</option>    
-                    </select>
+
+                <div class="col-md-4">
+                    <div class="row">
+                        <strong>Escala de temperatura do gráfico: </strong>
+                        <select class="form-control" ng-model="escalaGrafico" ng-change="carregarGrafico()">
+                            <option value="celcius">Celcius</option>    
+                            <option value="fahrenheit">Fahrenheit</option>    
+                        </select>
+                    </div>
+                    <div class="row">
+                        <strong>Considerar maior temperatura: </strong>
+                        <select class="form-control" ng-model="criterioGrafico" ng-change="carregarGrafico()">
+                            <option value="maxima">Máxima</option>    
+                            <option value="minima">Mínima</option>    
+                            <option value="media">Média</option>    
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <br>
-    
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table table-responsive" id="tabela-previsao-tempo">
-                <thead>
-                    <th class="estado">Estado</th>
-                    <th class="data" ng-click="alterarOrdenacao('date')">Data</th>
-                    <th class="fahrenheit" ng-click="alterarOrdenacao('lowFahrenheit')">Temperatura Mínima °F</th>
-                    <th class="fahrenheit" ng-click="alterarOrdenacao('highFahrenheit')">Temperatura Máxima °F</th>
-                    <th class="celcius" ng-click="alterarOrdenacao('lowCelcius')">Temperatura Mínima °C</th>
-                    <th class="celcius" ng-click="alterarOrdenacao('highCelcius')">Temperatura Máxima °C</th>
-                    <th class="condicao" ng-click="alterarOrdenacao('textoTraduzido')">Condição</th>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="previsao in previsaoTempo.channel.item.forecast">
-                        <td>{{previsaoTempo.channel.location.region}}</td>
-                        <td>{{previsao.date | date:'dd/MM/yyyy HH:mm:ss'}}</td>
-                        <td>{{previsao.lowFahrenheit}} °F</td>
-                        <td>{{previsao.highFahrenheit}} °F</td>
-                        <td>{{previsao.lowCelcius | number:2}} °C</td>
-                        <td>{{previsao.highCelcius | number:2}} °C</td>
-                        <td>{{previsao.textoTraduzido}}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <br>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-responsive" id="tabela-previsao-tempo">
+                    <thead>
+                        <th class="estado">Estado</th>
+                        <th class="data" ng-click="alterarOrdenacao('date')">Data</th>
+                        <th class="fahrenheit" ng-click="alterarOrdenacao('lowFahrenheit')">Temperatura Mínima °F</th>
+                        <th class="fahrenheit" ng-click="alterarOrdenacao('highFahrenheit')">Temperatura Máxima °F</th>
+                        <th class="celcius" ng-click="alterarOrdenacao('lowCelcius')">Temperatura Mínima °C</th>
+                        <th class="celcius" ng-click="alterarOrdenacao('highCelcius')">Temperatura Máxima °C</th>
+                        <th class="condicao" ng-click="alterarOrdenacao('textoTraduzido')">Condição</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="previsao in previsaoTempo.channel.item.forecast">
+                            <td>{{previsaoTempo.channel.location.region}}</td>
+                            <td>{{previsao.date | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                            <td>{{previsao.lowFahrenheit}} °F</td>
+                            <td>{{previsao.highFahrenheit}} °F</td>
+                            <td>{{previsao.lowCelcius | number:2}} °C</td>
+                            <td>{{previsao.highCelcius | number:2}} °C</td>
+                            <td>{{previsao.textoTraduzido}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
